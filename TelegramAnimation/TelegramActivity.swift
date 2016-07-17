@@ -11,9 +11,13 @@ import QuartzCore
 
 class TelegramActivity: UIView {
 
+    var animationDuration: CFTimeInterval = 0.7
+
     private let leftSquare = CALayer()
     private let rightSquare = CALayer()
     private var timer: CADisplayLink?
+
+    private var animating = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +32,7 @@ class TelegramActivity: UIView {
     func startAnimate() {
         let leftAnimation = CABasicAnimation(keyPath: "position.x")
         leftAnimation.toValue = bounds.size.width/2
-        leftAnimation.duration = 2
+        leftAnimation.duration = animationDuration
         leftAnimation.repeatCount = MAXFLOAT
         leftAnimation.autoreverses = true
 
@@ -37,13 +41,15 @@ class TelegramActivity: UIView {
 
         let rightAnimation = CABasicAnimation(keyPath: "position.x")
         rightAnimation.toValue = 0.0
-        rightAnimation.duration = 2
+        rightAnimation.duration = animationDuration
         rightAnimation.repeatCount = MAXFLOAT
         rightAnimation.autoreverses = true
 
         rightAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         rightSquare.addAnimation(leftAnimation, forKey: "rightxAnimation")
         rightSquare.delegate = self
+
+        animating = true
 
         timer = CADisplayLink(target: self, selector: #selector(timerFires))
         timer?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
@@ -52,14 +58,20 @@ class TelegramActivity: UIView {
     override func drawLayer(layer: CALayer, inContext ctx: CGContext) {
         super.drawLayer(layer, inContext: ctx)
 
-        let intersection = CGRectIntersection(leftSquare.presentationLayer()!.frame, rightSquare.presentationLayer()!.frame)
+        if animating {
+            let intersection = CGRectIntersection(leftSquare.presentationLayer()!.frame, rightSquare.presentationLayer()!.frame)
 
-        CGContextSetRGBFillColor(ctx, 1.0, 0.0, 0.0, 1.0)
-        let affineAffectedScaleFactor = leftSquare.frame.size.width / leftSquare.bounds.size.width
-        CGContextFillRect(ctx, CGRectMake(0, 0, intersection.width/affineAffectedScaleFactor, intersection.width/affineAffectedScaleFactor))
+            CGContextSetRGBFillColor(ctx, 1.0, 0.0, 0.0, 1.0)
+            let affineAffectedScaleFactor = leftSquare.frame.size.width / leftSquare.bounds.size.width
+            CGContextFillRect(ctx, CGRectMake(0, 0, intersection.width/affineAffectedScaleFactor, intersection.width/affineAffectedScaleFactor))
+        }
+        else {
+            CGContextClearRect(ctx, rightSquare.bounds)
+        }
     }
 
     func stopAnimate() {
+        animating = false
         timer?.invalidate()
 
         leftSquare.removeAllAnimations()
@@ -82,12 +94,15 @@ class TelegramActivity: UIView {
         leftSquare.backgroundColor = UIColor.blackColor().CGColor
         rightSquare.backgroundColor = UIColor.blueColor().CGColor
 
-        leftSquare.frame = CGRect(origin: CGPoint(x: 0, y: bounds.size.height/4), size: CGSize(width: bounds.size.width/2, height: bounds.size.height/2))
+        let sideLength = bounds.size.width / 2 / 2*sqrt(2)
+        let xOffset = (sqrt(2)*sideLength - sideLength) / 2
+
+        leftSquare.frame = CGRect(origin: CGPoint(x: xOffset, y: sideLength), size: CGSize(width: sideLength, height: sideLength))
+        rightSquare.frame = CGRect(origin: CGPoint(x: xOffset + sqrt(2)*sideLength, y: sideLength), size: CGSize(width: sideLength, height: sideLength))
 
         let rotation = CATransform3DMakeRotation(CGFloat(-45.0 * M_PI / 180.0), 0.0, 0.0, 1.0)
         leftSquare.transform = CATransform3DTranslate(rotation, 0.0, 0.0, 1.0)
 
-        rightSquare.frame = CGRect(origin: CGPoint(x: CGRectGetMaxX(leftSquare.frame), y: bounds.size.height/4), size: CGSize(width: bounds.size.width/2, height: bounds.size.height/2))
         rightSquare.transform = CATransform3DTranslate(rotation, 0.0, 0.0, 1.0)
 
         layer.addSublayer(leftSquare)
@@ -96,8 +111,12 @@ class TelegramActivity: UIView {
 
     override func layoutSublayersOfLayer(layer: CALayer) {
         super.layoutSublayersOfLayer(layer)
-        leftSquare.frame = CGRect(origin: CGPoint(x: 0.0, y: bounds.size.height/4), size: CGSize(width: bounds.size.width/2, height: bounds.size.width/2))
-        rightSquare.frame = CGRect(origin: CGPoint(x: CGRectGetMaxX(leftSquare.frame), y: bounds.size.height/4), size: CGSize(width: bounds.size.width/2, height: bounds.size.width/2))
+
+        let sideLength = bounds.size.width / 2 / 2*sqrt(2)
+        let xOffset = (sqrt(2)*sideLength - sideLength) / 2
+
+        leftSquare.frame = CGRect(origin: CGPoint(x: xOffset, y: sideLength), size: CGSize(width: sideLength, height: sideLength))
+        rightSquare.frame = CGRect(origin: CGPoint(x: xOffset + sqrt(2)*sideLength, y: sideLength), size: CGSize(width: sideLength, height: sideLength))
     }
 
 }
