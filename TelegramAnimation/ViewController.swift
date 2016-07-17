@@ -20,8 +20,8 @@ class ViewController: UIViewController {
 
         let xConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)
         let yConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 1.0, constant: 0)
-        let widthConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 100)
-        let heightConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 100)
+        let widthConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 200)
+        let heightConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 200)
 
         NSLayoutConstraint.activateConstraints([xConstraint, yConstraint, widthConstraint, heightConstraint])
     }
