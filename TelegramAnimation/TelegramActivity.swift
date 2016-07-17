@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import QuartzCore
 
 class TelegramActivity: UIView {
 
-    private var leftSquare = CALayer()
-    private var rightSquare = CALayer()
+    private let leftSquare = CALayer()
+    private let rightSquare = CALayer()
+    private var timer: CADisplayLink?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,11 +26,29 @@ class TelegramActivity: UIView {
     }
 
     func startAnimate() {
+        let leftAnimation = CABasicAnimation(keyPath: "position.x")
+        leftAnimation.toValue = bounds.size.width/2
+        leftAnimation.duration = 0.7
+        leftAnimation.repeatCount = MAXFLOAT
+        leftAnimation.autoreverses = true
+
+        leftAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        leftSquare.addAnimation(leftAnimation, forKey: "leftxAnimation")
+
+        let rightAnimation = CABasicAnimation(keyPath: "position.x")
+        rightAnimation.toValue = 0.0
+        rightAnimation.duration = 0.7
+        rightAnimation.repeatCount = MAXFLOAT
+        rightAnimation.autoreverses = true
+
+        rightAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        rightSquare.addAnimation(leftAnimation, forKey: "rightxAnimation")
 
     }
 
     func stopAnimate() {
-
+        leftSquare.removeAllAnimations()
+        rightSquare.removeAllAnimations()
     }
 
     private func setup() {
