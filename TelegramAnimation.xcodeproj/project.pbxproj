@@ -12,6 +12,7 @@
 		C55EA6831D3A95040098A94F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C55EA6811D3A95040098A94F /* Main.storyboard */; };
 		C55EA6851D3A95040098A94F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C55EA6841D3A95040098A94F /* Assets.xcassets */; };
 		C55EA6881D3A95040098A94F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C55EA6861D3A95040098A94F /* LaunchScreen.storyboard */; };
+		C55EA6901D3A958B0098A94F /* TelegramActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55EA68F1D3A958B0098A94F /* TelegramActivity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		C55EA6841D3A95040098A94F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C55EA6871D3A95040098A94F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C55EA6891D3A95040098A94F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C55EA68F1D3A958B0098A94F /* TelegramActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelegramActivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				C55EA67D1D3A95040098A94F /* AppDelegate.swift */,
 				C55EA67F1D3A95040098A94F /* ViewController.swift */,
+				C55EA68F1D3A958B0098A94F /* TelegramActivity.swift */,
 				C55EA6811D3A95040098A94F /* Main.storyboard */,
 				C55EA6841D3A95040098A94F /* Assets.xcassets */,
 				C55EA6861D3A95040098A94F /* LaunchScreen.storyboard */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C55EA6901D3A958B0098A94F /* TelegramActivity.swift in Sources */,
 				C55EA6801D3A95040098A94F /* ViewController.swift in Sources */,
 				C55EA67E1D3A95040098A94F /* AppDelegate.swift in Sources */,
 			);
