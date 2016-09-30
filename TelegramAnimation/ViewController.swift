@@ -18,12 +18,12 @@ class ViewController: UIViewController {
         telegramActivity.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(telegramActivity)
 
-        let xConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0)
-        let yConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 1.0, constant: 0)
-        let widthConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 200)
-        let heightConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 200)
+        let xConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0)
+        let yConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: 0)
+        let widthConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1.0, constant: 200)
+        let heightConstraint = NSLayoutConstraint(item: telegramActivity, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: 200)
 
-        NSLayoutConstraint.activateConstraints([xConstraint, yConstraint, widthConstraint, heightConstraint])
+        NSLayoutConstraint.activate([xConstraint, yConstraint, widthConstraint, heightConstraint])
     }
 
     @IBAction func startAnimateAction(sender: AnyObject) {

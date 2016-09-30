@@ -37,7 +37,7 @@ class TelegramActivity: UIView {
         leftAnimation.autoreverses = true
 
         leftAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        leftSquare.addAnimation(leftAnimation, forKey: "leftxAnimation")
+        leftSquare.add(leftAnimation, forKey: "leftxAnimation")
 
         let rightAnimation = CABasicAnimation(keyPath: "position.x")
         rightAnimation.toValue = 0.0
@@ -46,27 +46,27 @@ class TelegramActivity: UIView {
         rightAnimation.autoreverses = true
 
         rightAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        rightSquare.addAnimation(leftAnimation, forKey: "rightxAnimation")
+        rightSquare.add(leftAnimation, forKey: "rightxAnimation")
         rightSquare.delegate = self
 
         animating = true
 
         timer = CADisplayLink(target: self, selector: #selector(timerFires))
-        timer?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+        timer?.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
     }
 
-    override func drawLayer(layer: CALayer, inContext ctx: CGContext) {
-        super.drawLayer(layer, inContext: ctx)
+    override func draw(_ layer: CALayer, in ctx: CGContext) {
+        super.draw(layer, in: ctx)
 
         if animating {
-            let intersection = CGRectIntersection(leftSquare.presentationLayer()!.frame, rightSquare.presentationLayer()!.frame)
-
-            CGContextSetRGBFillColor(ctx, 1.0, 0.0, 0.0, 1.0)
+            let intersection = leftSquare.presentation()!.frame.intersection(rightSquare.presentation()!.frame)
+            
+            ctx.setFillColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
             let affineAffectedScaleFactor = leftSquare.frame.size.width / leftSquare.bounds.size.width
-            CGContextFillRect(ctx, CGRectMake(0, 0, intersection.width/affineAffectedScaleFactor, intersection.width/affineAffectedScaleFactor))
+            ctx.fill(CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: intersection.width/affineAffectedScaleFactor, height: intersection.width/affineAffectedScaleFactor)))
         }
         else {
-            CGContextClearRect(ctx, rightSquare.bounds)
+            ctx.clear(rightSquare.bounds)
         }
     }
 
@@ -88,11 +88,11 @@ class TelegramActivity: UIView {
     }
 
     private func setup() {
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         clipsToBounds = false
 
-        leftSquare.backgroundColor = UIColor.blackColor().CGColor
-        rightSquare.backgroundColor = UIColor.blueColor().CGColor
+        leftSquare.backgroundColor = UIColor.black.cgColor
+        rightSquare.backgroundColor = UIColor.blue.cgColor
 
         let sideLength = bounds.size.width / 2 / 2*sqrt(2)
         let xOffset = (sqrt(2)*sideLength - sideLength) / 2
@@ -109,14 +109,13 @@ class TelegramActivity: UIView {
         layer.addSublayer(rightSquare)
     }
 
-    override func layoutSublayersOfLayer(layer: CALayer) {
-        super.layoutSublayersOfLayer(layer)
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
 
         let sideLength = bounds.size.width / 2 / 2*sqrt(2)
         let xOffset = (sqrt(2)*sideLength - sideLength) / 2
-
+        
         leftSquare.frame = CGRect(origin: CGPoint(x: xOffset, y: sideLength), size: CGSize(width: sideLength, height: sideLength))
         rightSquare.frame = CGRect(origin: CGPoint(x: xOffset + sqrt(2)*sideLength, y: sideLength), size: CGSize(width: sideLength, height: sideLength))
     }
-
 }
